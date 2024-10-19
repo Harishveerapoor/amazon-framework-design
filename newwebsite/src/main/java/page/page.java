@@ -1,0 +1,39 @@
+package page;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class page {
+	public static WebDriver driver;
+	public static Properties pro;
+	
+	
+	public page () throws IOException {
+	Properties pro=new Properties();
+	FileInputStream file=new  FileInputStream("C:\\Batch22\\newwebsite\\src\\main\\java\\page\\configure.properties");
+	pro.load(file);
+	}
+	 public static WebDriver initialization(String browsname,String url) {
+		   if(browsname.equals("chrome")) {
+			   System.setProperty("webdriver.chrome.driver", "C:\\Users\\USER\\Documents\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+			   driver=new ChromeDriver();
+		   }
+		   else {
+			   System.out.println("we are not supporting this browser");
+		   }
+	         driver.manage().window().maximize();
+			driver.manage().deleteAllCookies();
+			driver.manage().timeouts().implicitlyWait(50, TimeUnit.MILLISECONDS);
+			driver.get(url);
+			return driver;
+		   
+	   }
+	 public void teardown() {
+		   driver.quit();
+	   }
+}
